@@ -1,0 +1,15 @@
+.cells.segment.ui()
+    .header.buttons.group.ui
+        button.button.ui(ng-click='reset()') New Game
+        button.button.ui(ng-click='computerWin(true)') Resign
+    .statistics.ui
+        .teal.statistic
+            .value {{ totalWins }}
+            .label Wins
+        .purple.statistic
+            .value {{ totalLoss }}
+            .label Loss
+        .black.statistic
+            .value {{ totalDraws }}
+            .label Draws
+    cell(ng-model='cell' ng-repeat='cell in board')
