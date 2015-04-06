@@ -4,13 +4,6 @@ from copy import deepcopy
 class BoardException(Exception):
     pass
 
-class CostSystem(object):
-    WIN = -100
-    DRAW = -50
-    LOSS = 100
-    MOVE = 1
-    BLOCK = 0
-
 class Board(object):
 
     MINIMUM_LENGTH = 3
@@ -65,9 +58,6 @@ class Board(object):
                     board.player_move(position)
 
         return board
-
-#     def get_cost(self, position, letter):
-#         if is_winner(position, letter)
 
     def states(self):
         '''
@@ -130,22 +120,6 @@ class Board(object):
         self.last_move['letter'] = letter
         self.last_move['position'] = position
 
-        # Add the cost
-        if self.player_win:
-            self.last_move['cost'] = CostSystem.LOSS
-#             print '**** PLAYER WIN ****'
-#             self.display
-        elif self.computer_win:
-            self.last_move['cost'] = CostSystem.WIN
-#             print '**** COMPUTER WIN ****'
-#             self.display
-        elif not self.free_cells:
-            self.last_move['cost'] = CostSystem.DRAW
-        elif letter == self.computer_letter:
-            self.last_move['cost'] = CostSystem.MOVE
-        else:
-            self.last_move['cost'] = 0
-
     def player_move(self, position):
         return self.move(position, self.player_letter)
 
@@ -163,12 +137,6 @@ class Board(object):
                 print '|',
         print
 
-    def __eq__(self, board):
-        return self.cost == board.cost
-
-    def __lt__(self, board):
-        return board.cost < self.cost
-
     @property
     def corners(self):
         return set([0, self.length - 1, self.total_cells - self.length, self.total_cells - 1])
@@ -184,10 +152,6 @@ class Board(object):
         return self.total_cells / 2
 
     def next_computer_position(self):
-#         tree = DecisionTree(self)
-#         tree.display_children()
-#         if tree.children:
-#             return tree.children[0].board.last_move
 
         # Computer is able to win
         for position in self.free_cells:
@@ -204,7 +168,7 @@ class Board(object):
             if board_copy.player_win:
                 return position
 
-        # Always take the corner, if possible
+        # Always take the center, if possible
         if self.center in self.free_cells:
             return self.center
 
@@ -235,63 +199,4 @@ class Board(object):
             return 'draw'
         return 'ongoing'
 
-class DecisionTree(object):
-
-    def __init__(self, board):
-        self.board = board
-        self.children = []
-        if not board.has_winner:
-            for position in board.free_cells:
-                new_board = deepcopy(board)
-                if board.last_move['letter'] == board.computer_letter:
-                    new_board.player_move(position)
-                else:
-                    new_board.computer_move(position)
-                self.children.append(DecisionTree(new_board))
-
-        self.cost = self.board.last_move['cost']
-        if self.children:
-            self.children.sort()
-            self.cost += self.children[0].cost
-
-
-    def display_children(self, level = 0):
-        title = '%s:%s' % (self.board.total_cells - len(self.board.free_cells), level)
-        self.board.display(title)
-        print 'Cost:', self.cost, self.children
-        if self.children:
-            self.children[0].display_children()
-#         for child in self.children:
-#             child.display_children()
-#             print
-#             print
-#             print
-
-    def __eq__(self, other):
-        return self.cost == other.cost
-
-    def __lt__(self, other):
-        return self.cost < other.cost
-
-    def __repr__(self, *args, **kwargs):
-        return 'Cost: %s (%s)' % (self.cost, self.board.last_move['position'])
-
-if __name__ == '__main__':
-
-    board = Board(3)
-    board.player_move(1)
-    board.computer_move(0)
-    board.player_move(4)
-    board.computer_move(7)
-    board.player_move(6)
-    board.computer_move(2)
-    board.player_move(3)
-    board.computer_move(5)
-    board.player_move(8)
-    board.display('---')
-#     board.computer_move(4)
-#     board.display
-#     tree = DecisionTree(board)
-#     tree.display_children()
-    print board.next_computer_position()
 
