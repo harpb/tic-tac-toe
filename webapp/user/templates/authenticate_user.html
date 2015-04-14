@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+{% if form.non_field_errors %}<div class="error message ui">{{ form.non_field_errors }}</div>{% endif %}<form method="post" action="{% url 'authenticate_user' %}" class="form ui">{% csrf_token %}
+{% for field in form.visible_fields %}<div class="field"><label>{{ field.label_tag }}</label>{{ field }}
+{% for error in field.errors %}<div class="pointing red label ui">{{ error }}</div>{% endfor %}</div>{% endfor %}<button type="submit" class="button ui">Authenticate</button></form>{% endblock%}

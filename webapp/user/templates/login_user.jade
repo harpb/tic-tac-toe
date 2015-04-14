@@ -1,0 +1,19 @@
+| {% extends "base.html" %}
+
+| {% block content %}
+| {% if form.errors %}
+.error.message.ui Your username and password didn't match. Please try again.
+| {% endif %}
+form.form.ui(
+    method="post"
+    action="{% url 'login_user' %}"
+)
+    | {% csrf_token %}
+    .field
+        label {{ form.username.label_tag }}
+        | {{ form.username }}
+    .field
+        label {{ form.password.label_tag }}
+        | {{ form.password }}
+    button.button.ui(type='submit') Login
+| {% endblock%}

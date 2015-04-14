@@ -1,5 +1,13 @@
-from django.db import models
+from django.utils.translation import ugettext as _
+
 from copy import deepcopy
+from django.db import models
+from django.conf import settings
+from model_utils.choices import Choices
+from swampdragon.models import SelfPublishModel
+from model_utils.models import TimeStampedModel
+from model_utils.fields import StatusField
+from tic_tac_toe.serializers import TicTacToeSerializer, TicTacToeMoveSerializer
 
 class BoardException(Exception):
     pass
@@ -200,3 +208,29 @@ class Board(object):
         return 'ongoing'
 
 
+class TicTacToe(TimeStampedModel):
+    STATUS = Choices(
+        (0, 'ongoing', _('Ongoing')),
+        (1, 'win', _('Win')),
+        (2, 'lose', _('Lose')),
+        (3, 'draw', _('Draw')),
+        (4, 'resign', _('Resign')),
+    )
+
+    serializer_class = TicTacToeSerializer
+
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL)
+    status = models.PositiveSmallIntegerField(choices = STATUS, default = STATUS.ongoing)
+
+    @property
+    def display_status(self):
+        return self.STATUS[self.status]
+
+    def __unicode__(self):
+        return u'TicTacToe #%d: %s for %s' % (self.id, self.display_status, self.creator)
+
+class TicTacToeMove(TimeStampedModel):
+    serializer_class = TicTacToeMoveSerializer
+
+    position = models.PositiveSmallIntegerField()
+    tic_tac_toe = models.ForeignKey(TicTacToe)

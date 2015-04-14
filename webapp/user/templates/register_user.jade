@@ -1,0 +1,22 @@
+| {% extends "base.html" %}
+
+| {% block content %}
+| {% if form.errors %}
+.error.message.ui Registration failed. Please try again.
+| {% endif %}
+form.form.ui(
+    method="post"
+    action="{% url 'register_user' %}"
+)
+    | {% csrf_token %}
+    .field
+        label {{ form.username.label_tag }}
+        | {{ form.username }}
+    .field
+        label {{ form.password1.label_tag }}
+        | {{ form.password1 }}
+    .field
+        label {{ form.password2.label_tag }}
+        | {{ form.password2 }}
+    button.button.ui(type='submit') Login
+| {% endblock%}

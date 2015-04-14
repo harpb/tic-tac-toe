@@ -1,0 +1,24 @@
+| {% extends "base.html" %}
+| {% block content %}
+
+| {% if form.non_field_errors %}
+.error.message.ui {{ form.non_field_errors }}
+| {% endif %}
+
+form.form.ui(
+method="post"
+action="{% url 'authenticate_user' %}"
+)
+    | {% csrf_token %}
+
+    | {% for field in form.visible_fields %}
+    .field
+        label {{ field.label_tag }}
+        | {{ field }}
+        | {% for error in field.errors %}
+        .pointing.red.label.ui {{ error }}
+        | {% endfor %}
+
+    | {% endfor %}
+    button.button.ui(type='submit') Authenticate
+| {% endblock%}

@@ -37,6 +37,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 3rd-party modules
+    'swampdragon',
+
+    # Our Modules
+    'common',
+    'tic_tac_toe',
+    'todo',
+    'user',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -47,7 +56,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+#     'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'webapp.urls'
@@ -102,3 +111,11 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 STATIC_URL = '/static/'
+
+
+# SwampDragon settings
+SWAMP_DRAGON_CONNECTION = (
+    'swampdragon_auth.socketconnection.HttpDataConnection',
+    '/data'
+)
+DRAGON_URL = 'http://localhost:9999/'

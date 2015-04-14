@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static swampdragon_tags %}
+
+{% block content %}
+    
+    {% verbatim %}
+    <div ng-app="TicTacToeApp">
+        <div ng-controller="TicTacToeCtrl">
+            <h3>
+                {{ ticTacToe.status }}
+                <button type="button" ng-click="newGame()">New</button>
+            </h3>
+            Make Move:
+            <button type="button" ng-repeat="position in positions" ng-click="makeMove(position)">
+                {{ position }}
+            </button>
+        
+            <ul>
+                <li ng-repeat="move in ticTacToeMoves">
+                    {{ move.position }}
+                    <pre>{{ move | json}}</pre>
+                </li>
+            </ul>
+
+            <pre>{{ ticTacToe | json}}</pre>
+        </div>
+    </div>
+    {% endverbatim %}
+    
+    <!-- Libs -->
+    <script type="text/javascript" src="{{ STATIC_URL }}tic_tac_toe/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}tic_tac_toe/bower_components/lodash/lodash.min.js"></script>
+    
+    {% swampdragon_settings %}
+    <script type="text/javascript" src="{% static 'swampdragon/js/dist/swampdragon.min.js' %}"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}swampdragon/js/dist/datamapper.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}swampdragon/js/angular/services.js"></script>
+    
+    <!-- To-do app -->
+    <script type="text/javascript" src="{{ STATIC_URL }}tic_tac_toe_realtime/app.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}tic_tac_toe_realtime/controllers.js"></script>
+
+{% endblock %}

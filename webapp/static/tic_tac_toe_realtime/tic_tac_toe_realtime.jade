@@ -1,0 +1,39 @@
+doctype html
+html(ng-app='app')
+head(lang='en')
+    meta(charset='UTF-8')
+    title Tic-Tac-Toe | HarpB
+    link(rel='stylesheet', type='text/css', href='bower_components/semantic/dist/semantic.min.css')
+    link(rel='stylesheet', type='text/css', href='style/tic_tac_toe_realtime.css')
+
+body.ui
+    h1.ui.header
+        | Tic-Tac-Toe
+        a.button.ui(href='https://github.com/harpb/tic-tac-toe')
+            i.github.icon
+            | Source
+    div(ng-app="myApp" ng-controller="AppController as app")
+        a(ng-link="home") Home
+        a(ng-link="detail({id: 5})") Detail
+        a(ng-link="dual({id: 1})") Dual
+        a(ng-link="double({id: 2})") Double
+        hr
+        //ng-viewport
+        hr
+        div(ng-viewport='master')
+        hr
+        div(ng-viewport='details')
+
+
+    script(src='bower_components/jquery/dist/jquery.min.js')
+    script(src='bower_components/lodash/lodash.min.js')
+    script(src='bower_components/semantic/dist/semantic.min.js')
+    script(src='bower_components/angular/angular.js')
+    script(src='bower_components/angular-new-router/dist/router.es5.js')
+    // Angular App
+    script(src='app/tic_tac_toe_realtime_app.js')
+    // Components
+    script(src='./components/home/home.js')
+    script(src='./components/detail/detail.js')
+    //script(src='app/directives/tic_tac_toe_directive.js')
+    //script(src='app/directives/cell_directive.js')
