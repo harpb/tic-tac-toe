@@ -4,7 +4,7 @@ log_format tic_tac_toe_clf '$remote_addr - $remote_user [$time_local] '
                 '"$request" $status $body_bytes_sent "$http_referer" '
                 '"$http_user_agent" "$request_time" "$http_x_forwarded_for" hostname="$host"' ;
                 
-upstream tic-tac-toe{
+upstream tic_tac_toe{
     server 127.0.0.1:8800;
 }
 
@@ -15,7 +15,7 @@ server{
     error_log /mnt/logs/nginx-tic-tac-toe-error.log;
 
     location / {
-        proxy_pass http://tic-tac-toe;
+        proxy_pass http://tic_tac_toe;
         proxy_buffering off;
     }
 
