@@ -13,12 +13,12 @@ body.ui
             i.github.icon
             | Source
     div(ng-app="myApp" ng-controller="AppController as app")
-        a(ng-link="home") Home
-        a(ng-link="detail({id: 5})") Detail
-        a(ng-link="dual({id: 1})") Dual
-        a(ng-link="double({id: 2})") Double
+        a(ui-sref="home") Home
+        a(ui-sref="detail({id: 5})") Detail
+        a(ui-sref="dual({id: 1})") Dual
+        a(ui-sref="double({id: 2})") Double
         hr
-        //ng-viewport
+        ui-view
         hr
         div(ng-viewport='master')
         hr

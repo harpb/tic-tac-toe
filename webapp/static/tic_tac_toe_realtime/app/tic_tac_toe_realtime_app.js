@@ -28,8 +28,8 @@
     ]);
   };
 
-  app = angular.module('app', ['ngNewRouter', 'app.home', 'app.detail']);
+  app = angular.module('app', ['ui.router']);
 
-  app.controller('AppController', ['$router', AppController]);
+  app.controller('AppController', [AppController]);
 
 }).call(this);

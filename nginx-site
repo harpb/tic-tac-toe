@@ -1,0 +1,33 @@
+# ln -s /home/harpb/tic-tac-toe/nginx-site /etc/nginx/sites-enabled/tic-tac-toe
+
+log_format tic_tac_toe_clf '$remote_addr - $remote_user [$time_local] '
+                '"$request" $status $body_bytes_sent "$http_referer" '
+                '"$http_user_agent" "$request_time" "$http_x_forwarded_for" hostname="$host"' ;
+                
+upstream tic-tac-toe{
+    server 127.0.0.1:8800;
+}
+
+server{
+    listen 80;
+    server_name tic-tac-toe.harpb.com www.tic-tac-toe.harpb.com;
+    access_log /mnt/logs/nginx-tic-tac-toe-access.log tic_tac_toe_clf;
+    error_log /mnt/logs/nginx-tic-tac-toe-error.log;
+
+    location / {
+        proxy_pass http://tic-tac-toe;
+        proxy_buffering off;
+    }
+
+    location /static {
+        root /home/harpb/tic-tac-toe/webapp;
+    }
+
+    rewrite  ^/static/(.*)$  /static_collection/$1 last;
+
+    # Path for static files
+    root /home/harpb/tic-tac-toe/webapp/;
+
+    #Specify a charset
+    charset utf-8;
+}

@@ -28,8 +28,6 @@ AppController = ($router)->
     ])
 
 app = angular.module('app',[
-    'ngNewRouter'
-    'app.home'
-    'app.detail'
+    'ui.router'
 ])
-app.controller('AppController', ['$router', AppController])
+app.controller('AppController', [AppController])
