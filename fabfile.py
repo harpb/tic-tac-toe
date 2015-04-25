@@ -57,7 +57,8 @@ def django_manage(cmd, background = False, server_env = None):
 def start_server(server_env = None):
     if not server_env:
         server_env = env.settings
-    sudo('service nginx start')
+    run('service nginx start')
+    run('service redis_6379 start')
     
     for port in server_env['ports']:
         cmd = '%s/bin/python %s %d' % (server_env['pyenv_path'], server_env['server_script'], port)
@@ -82,7 +83,8 @@ def stop_django(server_env = None):
 def stop_server(server_env = None):
     if not server_env:
         server_env = env.settings
-    sudo('service nginx stop')
+    run('service nginx stop')
+    run('service redis_6379 stop')
     stop_django(server_env)
 
 def restart_server():
