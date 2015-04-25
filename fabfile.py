@@ -11,6 +11,7 @@ for env_name, env_settings in environments.iteritems():
     env_settings['static_path'] = env_settings['webapp_path'] + '/static'
     env_settings['js_apps'] = ['.']
     env_settings['server_script'] = env_settings['webapp_path'] + '/gevent_wsgi_server.py'
+    env_settings['realtime_server_script'] = env_settings['webapp_path'] + '/server.py'
 
 #===============================================================================
 # ENVIRONMENTS
@@ -61,12 +62,20 @@ def start_server(server_env = None):
     for port in server_env['ports']:
         cmd = '%s/bin/python %s %d' % (server_env['pyenv_path'], server_env['server_script'], port)
         run_in_background(cmd, server_env)
+    
+    cmd = '{}/bin/python {}'.format(
+        server_env['pyenv_path'], server_env['realtime_server_script'])
+    run_in_background(cmd, server_env)
 
 def stop_django(server_env = None):
     if not server_env:
         server_env = env.settings
     try:
         run('pkill -f %r' % server_env['server_script'])
+    except:
+        pass
+    try:
+        run('pkill -f %r' % server_env['realtime_server_script'])
     except:
         pass
 
