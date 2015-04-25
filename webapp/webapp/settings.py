@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import logging
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SERVER_ENVIRONMENT = 'LOCAL'
@@ -25,11 +26,11 @@ SECRET_KEY = '7l!nq*lr8p#^)nrx*k&)=ywm3-tpm7v3$kcy*6d^epf6-z9a6e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+INTERNAL_IPS = ('127.0.0.1',)
+ALLOWED_HOSTS = ('tic_tac_toe', '.harpb.com', '.harpb.com:8000')
+USE_X_FORWARDED_HOST = True
 
 # Application definition
-
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -114,7 +115,32 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_collection")
 STATIC_URL = '/static/'
 
 
-# SwampDragon settings
+#===============================================================================
+# LOGGING
+#===============================================================================
+LOG_ENABLED = True
+LOG_LEVEL = logging.DEBUG
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/tmp/tic-tac-toe-debug.log',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+#===============================================================================
+# SwampDragon
+#===============================================================================
 SWAMP_DRAGON_CONNECTION = (
     'swampdragon_auth.socketconnection.HttpDataConnection',
     '/data'

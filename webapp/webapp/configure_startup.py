@@ -18,7 +18,7 @@ def set_test():
 def set_prod(debug = False):
     settings.SWAMP_DRAGON_HOST = '0.0.0.0'
     hostname = 'tic-tac-toe.harpb.com'
-    settings.ALLOWED_HOSTS = (hostname, '.harpb.com')
+    settings.ALLOWED_HOSTS = ('.harpb.com')
     if not debug:
         settings.DEBUG = False
     settings.TEMPLATE_DEBUG = False
