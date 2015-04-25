@@ -27,7 +27,7 @@ SECRET_KEY = '7l!nq*lr8p#^)nrx*k&)=ywm3-tpm7v3$kcy*6d^epf6-z9a6e'
 DEBUG = True
 
 INTERNAL_IPS = ('127.0.0.1',)
-ALLOWED_HOSTS = ('tic_tac_toe', '.harpb.com', '.harpb.com:8000')
+ALLOWED_HOSTS = ('*')
 USE_X_FORWARDED_HOST = True
 
 # Application definition
@@ -50,7 +50,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'webapp.middlewares.HostMiddleware',
+#     'webapp.middlewares.HostMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
