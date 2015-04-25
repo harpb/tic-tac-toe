@@ -17,6 +17,7 @@ def set_test():
 
 def set_prod(debug = False):
     hostname = 'tic-tac-toe.harpb.com'
+    settings.ALLOWED_HOSTS = [hostname]
     if not debug:
         settings.DEBUG = False
     settings.TEMPLATE_DEBUG = False
