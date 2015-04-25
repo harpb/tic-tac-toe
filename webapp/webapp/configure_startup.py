@@ -18,16 +18,12 @@ def set_test():
 def set_prod(debug = False):
     settings.SWAMP_DRAGON_HOST = '0.0.0.0'
     hostname = 'tic-tac-toe.harpb.com'
-    settings.ALLOWED_HOSTS = [hostname]
+    settings.ALLOWED_HOSTS = (hostname, '.harpb.com')
     if not debug:
         settings.DEBUG = False
     settings.TEMPLATE_DEBUG = False
-    if not settings.DEBUG:
-        settings.LOG_LEVEL = logging.INFO
-        settings.LOG_ENABLED = False
 
     settings.DRAGON_URL = settings.DRAGON_URL.replace('localhost', hostname)
-    print 'settings.DRAGON_URL', settings.DRAGON_URL
 
 #===============================================================================
 # CONFIGURE environment
@@ -48,7 +44,7 @@ if not settings.SERVER_ENVIRONMENT:
 
 def configure(environment_type):
     settings.SERVER_ENVIRONMENT = environment_type.upper()
-    print r"settings.SERVER_ENVIRONMENT: '%s'" % settings.SERVER_ENVIRONMENT
+#     print r"settings.SERVER_ENVIRONMENT: '%s'" % settings.SERVER_ENVIRONMENT
     if 'PROD' == settings.SERVER_ENVIRONMENT:
         set_prod()
     elif 'DEBUG_PROD' == settings.SERVER_ENVIRONMENT:

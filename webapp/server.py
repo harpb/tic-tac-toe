@@ -12,4 +12,3 @@ host_port = sys.argv[1] if len(sys.argv) > 1 else None
 run_server(host_port=host_port)
 
 from django.conf import settings
-print 'settings', settings
